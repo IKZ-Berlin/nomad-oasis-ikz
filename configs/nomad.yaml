@@ -73,12 +73,11 @@ plugins:
     - "nomad_measurements.general:schema"
     # - "nomad_measurements.xrd:schema"
     - "nomad_measurements.xrd:parser"
-    # - "nomad_measurements.transmission:schema"
-    # - "nomad_measurements.transmission:parser"
     - "nomad_analysis.general:schema"
     - "nomad_analysis.jupyter:schema"
     - "nomad_ikz_plugin.general:schema"
     - "nomad_ikz_plugin.characterization:schema"
+    - "nomad_ikz_plugin.characterization:transmission_parser"
     - "nomad_ikz_plugin.pld:schema"
     - "nomad_ikz_plugin.movpe:schema"
     - "nomad_ikz_plugin.movpe.movpe2.growth_excel:parser"
@@ -101,9 +100,7 @@ plugins:
     - 'laytec_epitt_plugin:laytec_parser'
     - 'rtg_sims:schema'
     - 'rtg_sims:parser'
-    - 'parsers/uv_vis_nir_transmission'    
     # - 'schemas/RTGSIMS'
-    # - 'parsers/uv_vis_nir_transmission'
 
   exclude:
     - 'parsers/nexus'
@@ -111,8 +108,7 @@ plugins:
   options:
     # schemas/RTGSIMS:  
     #   python_package: rtg_sims
-    parsers/uv_vis_nir_transmission:
-      python_package: uv_vis_nir_transmission.parser
+
 ui:
   apps:
     # Configures which apps to show. Note that the app for 'entries' (which
