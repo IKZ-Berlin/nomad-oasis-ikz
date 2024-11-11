@@ -1,3 +1,6 @@
+keycloak:
+  realm_name: fairdi_nomad_test
+
 services:
   api_host: 'nomad-test.support.ikz-berlin.de'
   api_base_path: '/nomad-oasis'
