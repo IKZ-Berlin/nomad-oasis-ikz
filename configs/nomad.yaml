@@ -104,6 +104,8 @@ plugins:
     - 'rtg_sims:schema'
     - 'rtg_sims:parser'
     # - 'schemas/RTGSIMS'
+    - "transmission:schema"
+    - "transmission:parser"
 
   exclude:
     - 'parsers/nexus'
