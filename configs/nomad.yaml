@@ -81,6 +81,7 @@ plugins:
     - "nomad_ikz_plugin.general:schema"
     - "nomad_ikz_plugin.characterization:schema"
     - "nomad_ikz_plugin.characterization:transmission_parser"
+    - "transmission:schema"
     - "nomad_ikz_plugin.pld:schema"
     - "nomad_ikz_plugin.movpe:schema"
     - "nomad_ikz_plugin.movpe.movpe2.growth_excel:parser"
@@ -104,8 +105,6 @@ plugins:
     - 'rtg_sims:schema'
     - 'rtg_sims:parser'
     # - 'schemas/RTGSIMS'
-    - "transmission:schema"
-    - "transmission:parser"
 
   exclude:
     - 'parsers/nexus'
