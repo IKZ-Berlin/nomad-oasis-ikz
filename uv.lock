@@ -2861,7 +2861,7 @@ wheels = [
 
 [[package]]
 name = "nomad-analysis"
-version = "0.0.6.dev6+g7f2fe10"
+version = "0.0.6"
 source = { git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=7f2fe10084953e2827389e2bcb42df6b106ab484#7f2fe10084953e2827389e2bcb42df6b106ab484" }
 dependencies = [
     { name = "nbformat" },
