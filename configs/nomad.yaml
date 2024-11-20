@@ -1,5 +1,5 @@
-keycloak:
-  realm_name: fairdi_nomad_test
+# keycloak:
+#   realm_name: fairdi_nomad_test
 
 services:
   api_host: 'nomad-test.support.ikz-berlin.de'
@@ -88,7 +88,7 @@ plugins:
     - "nomad_ikz_plugin.movpe.movpe1.growth_excel:parser"
     - "nomad_ikz_plugin.movpe.substrate:parser"
     - "nomad_ikz_plugin.mbe:schema"
-    # - "nomad_ikz_plugin.directional_solidification:schema"
+    - "nomad_ikz_plugin.directional_solidification:schema"
     - "nomad_ikz_plugin.directional_solidification:excel_parser"
     - "nomad_ikz_plugin.czochralski:schema"
     - "nomad_ikz_plugin.czochralski:parser"
