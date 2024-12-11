@@ -2897,8 +2897,8 @@ wheels = [
 
 [[package]]
 name = "nomad-analysis"
-version = "0.0.6"
-source = { git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=7f2fe10084953e2827389e2bcb42df6b106ab484#7f2fe10084953e2827389e2bcb42df6b106ab484" }
+version = "0.0.7.dev5+g56e80dc"
+source = { git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=56e80dc21864c03471819eaddb916318a651b063#56e80dc21864c03471819eaddb916318a651b063" }
 dependencies = [
     { name = "nbformat" },
     { name = "nomad-lab" },
@@ -2947,7 +2947,7 @@ requires-dist = [
     { name = "jupyter-flex", marker = "extra == 'jupyter'" },
     { name = "lakeshore-nomad-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/lakeshore-nomad-plugin.git?rev=69a6deb3f0e99d7b0dc66714105dd62a56f157e9#69a6deb3f0e99d7b0dc66714105dd62a56f157e9" },
     { name = "laytec-epitt-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/laytec_epitt_nomad_plugin.git?rev=f4953ac4ecb55b7003dee323d7d7f473e49ab4e3#f4953ac4ecb55b7003dee323d7d7f473e49ab4e3" },
-    { name = "nomad-analysis", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=7f2fe10084953e2827389e2bcb42df6b106ab484#7f2fe10084953e2827389e2bcb42df6b106ab484" },
+    { name = "nomad-analysis", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=56e80dc21864c03471819eaddb916318a651b063#56e80dc21864c03471819eaddb916318a651b063" },
     { name = "nomad-ikz-fz", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=9c4b4398b4ce07f8935bfbbb95407456c9b05d1d#9c4b4398b4ce07f8935bfbbb95407456c9b05d1d" },
     { name = "nomad-ikz-omega-theta-xrd", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-omega-theta-xrd.git?rev=c8d6c0858b6dee06858a93114cba7558da6c57ab#c8d6c0858b6dee06858a93114cba7558da6c57ab" },
     { name = "nomad-ikz-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git?rev=v0.1.4" },
