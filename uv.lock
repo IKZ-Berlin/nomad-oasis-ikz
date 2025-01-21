@@ -2948,7 +2948,7 @@ requires-dist = [
     { name = "lakeshore-nomad-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/lakeshore-nomad-plugin.git?rev=69a6deb3f0e99d7b0dc66714105dd62a56f157e9#69a6deb3f0e99d7b0dc66714105dd62a56f157e9" },
     { name = "laytec-epitt-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/laytec_epitt_nomad_plugin.git?rev=f4953ac4ecb55b7003dee323d7d7f473e49ab4e3#f4953ac4ecb55b7003dee323d7d7f473e49ab4e3" },
     { name = "nomad-analysis", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=5ef68517897d13e82862a84674572335793b44ec#5ef68517897d13e82862a84674572335793b44ec" },
-    { name = "nomad-ikz-fz", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=a43b8f044de3a57eb9dc1f868c09c4eeac4a7efb#a43b8f044de3a57eb9dc1f868c09c4eeac4a7efb" },
+    { name = "nomad-ikz-fz", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=9faf82053a432a935193e61c84cb289cd32ebc05#9faf82053a432a935193e61c84cb289cd32ebc05" },
     { name = "nomad-ikz-omega-theta-xrd", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-omega-theta-xrd.git?rev=c8d6c0858b6dee06858a93114cba7558da6c57ab#c8d6c0858b6dee06858a93114cba7558da6c57ab" },
     { name = "nomad-ikz-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git?rev=v0.1.4" },
     { name = "nomad-ikz-raman", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/IKZ_raman.git?rev=797a36fa985412e00527d4298f763eb2318a3ec4#797a36fa985412e00527d4298f763eb2318a3ec4" },
@@ -2966,7 +2966,7 @@ requires-dist = [
 [[package]]
 name = "nomad-ikz-fz"
 version = "0.1.0"
-source = { git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=a43b8f044de3a57eb9dc1f868c09c4eeac4a7efb#a43b8f044de3a57eb9dc1f868c09c4eeac4a7efb" }
+source = { git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=9faf82053a432a935193e61c84cb289cd32ebc05#9faf82053a432a935193e61c84cb289cd32ebc05" }
 dependencies = [
     { name = "nomad-lab" },
     { name = "nomad-material-processing" },
