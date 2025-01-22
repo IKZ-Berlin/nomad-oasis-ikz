@@ -2897,8 +2897,8 @@ wheels = [
 
 [[package]]
 name = "nomad-analysis"
-version = "0.0.6"
-source = { git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=7f2fe10084953e2827389e2bcb42df6b106ab484#7f2fe10084953e2827389e2bcb42df6b106ab484" }
+version = "0.0.7.dev6+g5ef6851"
+source = { git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=5ef68517897d13e82862a84674572335793b44ec#5ef68517897d13e82862a84674572335793b44ec" }
 dependencies = [
     { name = "nbformat" },
     { name = "nomad-lab" },
@@ -2947,7 +2947,7 @@ requires-dist = [
     { name = "jupyter-flex", marker = "extra == 'jupyter'" },
     { name = "lakeshore-nomad-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/lakeshore-nomad-plugin.git?rev=69a6deb3f0e99d7b0dc66714105dd62a56f157e9" },
     { name = "laytec-epitt-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/laytec_epitt_nomad_plugin.git?rev=f4953ac4ecb55b7003dee323d7d7f473e49ab4e3" },
-    { name = "nomad-analysis", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=7f2fe10084953e2827389e2bcb42df6b106ab484" },
+    { name = "nomad-analysis", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=5ef68517897d13e82862a84674572335793b44ec" },
     { name = "nomad-ikz-fz", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=9faf82053a432a935193e61c84cb289cd32ebc05" },
     { name = "nomad-ikz-omega-theta-xrd", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-omega-theta-xrd.git?rev=c8d6c0858b6dee06858a93114cba7558da6c57ab" },
     { name = "nomad-ikz-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git?rev=9c1354915b8b3668ddbf8f82dfa68495bc1b9c46" },
