@@ -73,7 +73,7 @@ constraint-dependencies = ["hyperspy>=1.7.6"]
 prerelease = "disallow"
 
 [tool.uv.sources]
-nomad-ikz-plugin = { git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git", rev = "9c1354915b8b3668ddbf8f82dfa68495bc1b9c46" }
+nomad-ikz-plugin = { git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git", rev = "v0.1.5" }
 
 [tool.setuptools.packages.find]
 exclude = ["gui*", "docs*", "config*"]
