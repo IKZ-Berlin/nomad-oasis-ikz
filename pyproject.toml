@@ -41,8 +41,8 @@ plugins = [
 #  "nomad-parser-plugins-database>=1.0",
 
  "nomad-material-processing @ git+https://github.com/FAIRmat-NFDI/nomad-material-processing.git@8545ef374ac53169fe1e40be927a212a364ebda1",
- "nomad-measurements @	git+https://github.com/FAIRmat-NFDI/nomad-measurements.git@baa56e55fb55e7d899ff818a9ca2b8c84b724292",
- "nomad-analysis @ git+https://github.com/FAIRmat-NFDI/nomad-analysis.git@5ef68517897d13e82862a84674572335793b44ec",
+ "nomad-measurements",
+ "nomad-analysis",
  "nomad-ikz-plugin",
  "nomad-ikz-fz @ git+https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git@9faf82053a432a935193e61c84cb289cd32ebc05",
  "nomad_ikz_raman @ git+https://github.com/IKZ-Berlin/IKZ_raman.git@797a36fa985412e00527d4298f763eb2318a3ec4",
@@ -70,6 +70,8 @@ prerelease = "disallow"
 
 [tool.uv.sources]
 nomad-ikz-plugin = { git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git", rev = "v0.1.7" }
+nomad-measurements = { git = "https://github.com/FAIRmat-NFDI/nomad-measurements.git", rev = "v1.1.0" }
+nomad-analysis = { git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git", rev = "v0.0.7" }
 
 [tool.setuptools.packages.find]
 exclude = ["gui*", "docs*", "config*"]
