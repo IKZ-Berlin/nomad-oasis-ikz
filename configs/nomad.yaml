@@ -104,7 +104,7 @@ plugins:
     - 'laytec_epitt_plugin:laytec_parser'
     - 'rtg_sims:schema'
     - 'rtg_sims:parser'
-    - 'ikz-trpl:schema_package'
+    - 'ikz_trpl:schema_package'
     # - 'schemas/RTGSIMS'
 
   exclude:
