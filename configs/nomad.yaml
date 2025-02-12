@@ -22,6 +22,7 @@ north:
       jupyter:
         short_description: A JupyterLab container with pre-installed NOMAD plugins.
         image: ghcr.io/ikz-berlin/nomad-oasis-ikz/jupyter:test-oasis
+        external_mounts: ['/mnt/cifs/castor/']
       voila:
         short_description: A jupyter webapp container with voila
         description: A jupyter hub webapp container with voila installed.
@@ -29,6 +30,7 @@ north:
         path_prefix: voila/render
         with_path: true
         mount_path: /home/jovyan
+        external_mounts: ['/mnt/cifs/castor/']
         file_extensions:
           - ipynb
         maintainer:
