@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.9"
 resolution-markers = [
     "python_full_version < '3.11' and sys_platform == 'win32'",
@@ -2955,7 +2956,7 @@ requires-dist = [
     { name = "ipysheet", marker = "extra == 'jupyter'" },
     { name = "jupyter-flex", marker = "extra == 'jupyter'" },
     { name = "nomad-analysis", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=v0.0.7" },
-    { name = "nomad-ikz-fz", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=9faf82053a432a935193e61c84cb289cd32ebc05" },
+    { name = "nomad-ikz-fz", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=e01d4caee7acb204335366fbdd6b9e3b8010296e" },
     { name = "nomad-ikz-omega-theta-xrd", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-omega-theta-xrd.git?rev=e7049b305f6f5387008f8350f4a9f01bd942c386" },
     { name = "nomad-ikz-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git?rev=v0.1.7" },
     { name = "nomad-ikz-raman", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/IKZ_raman.git?rev=797a36fa985412e00527d4298f763eb2318a3ec4" },
@@ -2969,11 +2970,12 @@ requires-dist = [
     { name = "statsmodels", marker = "extra == 'plugins'" },
     { name = "voila", marker = "extra == 'jupyter'" },
 ]
+provides-extras = ["plugins", "jupyter", "dev"]
 
 [[package]]
 name = "nomad-ikz-fz"
 version = "0.1.0"
-source = { git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=9faf82053a432a935193e61c84cb289cd32ebc05#9faf82053a432a935193e61c84cb289cd32ebc05" }
+source = { git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=e01d4caee7acb204335366fbdd6b9e3b8010296e#e01d4caee7acb204335366fbdd6b9e3b8010296e" }
 dependencies = [
     { name = "nomad-lab" },
     { name = "nomad-material-processing" },
