@@ -40,6 +40,7 @@ plugins = [
 #  "nomad-parser-plugins-workflow>=1.0",
 #  "nomad-parser-plugins-database>=1.0",
 
+ "uv_vis_nir_transmission @ git+https://github.com/FAIRmat-NFDI/AreaA-data_modeling_and_schemas.git@245a82ddc24da5f8aaa79164e6669c18c2bc1572#subdirectory=transmission/transmission_plugin/uv_vis_nir_transmission_plugin",
  "nomad-material-processing @ git+https://github.com/FAIRmat-NFDI/nomad-material-processing.git@8545ef374ac53169fe1e40be927a212a364ebda1",
  "nomad-measurements",
  "nomad-analysis",

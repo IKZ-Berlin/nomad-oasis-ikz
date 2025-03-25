@@ -88,7 +88,7 @@ plugins:
     - "nomad_analysis.jupyter:schema"
     - "nomad_ikz_plugin.general:schema"
     - "nomad_ikz_plugin.characterization:schema"
-    - "nomad_ikz_plugin.characterization:transmission_parser"
+    # - "nomad_ikz_plugin.characterization:transmission_parser"
     - "nomad_ikz_plugin.deprecated.characterization:schema"
     - "nomad_ikz_plugin.pld:schema"
     - "nomad_ikz_plugin.movpe:schema"
@@ -120,7 +120,7 @@ plugins:
     - "nomad_ikz_plugin.movpe:movpesubstrateapp"
     - "nomad_ikz_plugin.movpe:movpegrowthrunapp"
     - "nomad_ikz_plugin.movpe:movpelayersapp"
-    
+    - 'parsers/uv_vis_nir_transmission'
     
   exclude:
     - 'parsers/nexus'
@@ -128,6 +128,8 @@ plugins:
   options:
     # schemas/RTGSIMS:  
     #   python_package: rtg_sims
+    parsers/uv_vis_nir_transmission:
+      python_package: uv_vis_nir_transmission.parser
 
 ui:
   apps:
