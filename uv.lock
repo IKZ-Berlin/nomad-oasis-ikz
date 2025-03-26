@@ -1122,6 +1122,20 @@ wheels = [
 ]
 
 [[package]]
+name = "fairmat-readers-transmission"
+version = "0.0.2"
+source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "pint" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/17/71/5fd70ceb6fa7991e683a19ee60dedbb73348365d97e69c68e8c0481eacbc/fairmat_readers_transmission-0.0.2.tar.gz", hash = "sha256:9038c2402e91984ecd79c53b5adca1bf981b7b62be3405d6830dc84166fc2ea2", size = 46920 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5b/95/0e87572ea39a8e04aafa41b856f8ab089b7a7d5bd3e8fec2bef32bf1b058/fairmat_readers_transmission-0.0.2-py3-none-any.whl", hash = "sha256:bce6eba9a0160afa1f21dc46d12cc1b5754ea0c9db66732bea84992d3ecde9e4", size = 16647 },
+]
+
+[[package]]
 name = "fairmat-readers-xrd"
 version = "0.0.7"
 source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }
@@ -1550,6 +1564,16 @@ source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages
 sdist = { url = "https://files.pythonhosted.org/packages/f1/70/7703c29685631f5a7590aa73f1f1d3fa9a380e654b86af429e0934a32f7d/idna-3.10.tar.gz", hash = "sha256:12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9", size = 190490 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/76/c6/c88e154df9c4e1a2a66ccf0005a88dfb2650c1dffb6f5ce603dfbd452ce3/idna-3.10-py3-none-any.whl", hash = "sha256:946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3", size = 70442 },
+]
+
+[[package]]
+name = "ikz-trpl"
+version = "0.1.0"
+source = { git = "https://github.com/IKZ-Berlin/ikz-trpl.git?rev=eff798a402344d65384c1b5666bf187747be01a6#eff798a402344d65384c1b5666bf187747be01a6" }
+dependencies = [
+    { name = "nomad-lab", version = "1.3.13", source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }, marker = "python_full_version < '3.10'" },
+    { name = "nomad-lab", version = "1.3.15", source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "python-magic-bin", marker = "sys_platform == 'win32'" },
 ]
 
 [[package]]
@@ -2161,7 +2185,7 @@ wheels = [
 [[package]]
 name = "lakeshore-nomad-plugin"
 version = "0.0.1"
-source = { git = "https://github.com/IKZ-Berlin/lakeshore-nomad-plugin.git?rev=69a6deb3f0e99d7b0dc66714105dd62a56f157e9#69a6deb3f0e99d7b0dc66714105dd62a56f157e9" }
+source = { git = "https://github.com/IKZ-Berlin/lakeshore-nomad-plugin.git?branch=main#69a6deb3f0e99d7b0dc66714105dd62a56f157e9" }
 dependencies = [
     { name = "nomad-analysis" },
     { name = "nomad-lab", version = "1.3.13", source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }, marker = "python_full_version < '3.10'" },
@@ -2191,7 +2215,7 @@ wheels = [
 [[package]]
 name = "laytec-epitt-plugin"
 version = "0.0.1"
-source = { git = "https://github.com/IKZ-Berlin/laytec_epitt_nomad_plugin.git?rev=f4953ac4ecb55b7003dee323d7d7f473e49ab4e3#f4953ac4ecb55b7003dee323d7d7f473e49ab4e3" }
+source = { git = "https://github.com/IKZ-Berlin/laytec_epitt_nomad_plugin.git?branch=main#44fbf64493b658ec4fabcc3382ba31c06dd61feb" }
 dependencies = [
     { name = "nomad-lab", version = "1.3.13", source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }, marker = "python_full_version < '3.10'" },
     { name = "nomad-lab", version = "1.3.15", source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }, marker = "python_full_version >= '3.10'" },
@@ -2978,8 +3002,8 @@ wheels = [
 
 [[package]]
 name = "nomad-analysis"
-version = "0.0.7.dev6+g5ef6851"
-source = { git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=5ef68517897d13e82862a84674572335793b44ec#5ef68517897d13e82862a84674572335793b44ec" }
+version = "0.0.7"
+source = { git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=v0.0.7#cc602021f95ad5b1bc921c6835e76561d28f0e76" }
 dependencies = [
     { name = "nbformat" },
     { name = "nomad-lab", version = "1.3.13", source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }, marker = "python_full_version < '3.10'" },
@@ -3009,8 +3033,7 @@ jupyter = [
     { name = "voila" },
 ]
 plugins = [
-    { name = "lakeshore-nomad-plugin" },
-    { name = "laytec-epitt-plugin" },
+    { name = "ikz-trpl" },
     { name = "nomad-analysis" },
     { name = "nomad-ikz-fz" },
     { name = "nomad-ikz-omega-theta-xrd" },
@@ -3018,27 +3041,28 @@ plugins = [
     { name = "nomad-ikz-raman" },
     { name = "nomad-material-processing" },
     { name = "nomad-measurements" },
+    { name = "plotly" },
     { name = "rtg-sims" },
     { name = "statsmodels" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "ikz-trpl", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-trpl.git?rev=eff798a402344d65384c1b5666bf187747be01a6" },
     { name = "ipyaggrid", marker = "extra == 'jupyter'" },
     { name = "ipydatagrid", marker = "extra == 'jupyter'" },
     { name = "ipysheet", marker = "extra == 'jupyter'" },
     { name = "jupyter-flex", marker = "extra == 'jupyter'" },
-    { name = "lakeshore-nomad-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/lakeshore-nomad-plugin.git?rev=69a6deb3f0e99d7b0dc66714105dd62a56f157e9" },
-    { name = "laytec-epitt-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/laytec_epitt_nomad_plugin.git?rev=f4953ac4ecb55b7003dee323d7d7f473e49ab4e3" },
-    { name = "nomad-analysis", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=5ef68517897d13e82862a84674572335793b44ec" },
-    { name = "nomad-ikz-fz", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=9faf82053a432a935193e61c84cb289cd32ebc05" },
-    { name = "nomad-ikz-omega-theta-xrd", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-omega-theta-xrd.git?rev=c8d6c0858b6dee06858a93114cba7558da6c57ab" },
-    { name = "nomad-ikz-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git?rev=v0.1.5" },
+    { name = "nomad-analysis", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git?rev=v0.0.7" },
+    { name = "nomad-ikz-fz", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=3a8dbfb8b5bc2c6ef53d997cc2097cf70f17c27b" },
+    { name = "nomad-ikz-omega-theta-xrd", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/ikz-omega-theta-xrd.git?rev=e7049b305f6f5387008f8350f4a9f01bd942c386" },
+    { name = "nomad-ikz-plugin", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git?rev=v0.1.9" },
     { name = "nomad-ikz-raman", marker = "extra == 'plugins'", git = "https://github.com/IKZ-Berlin/IKZ_raman.git?rev=797a36fa985412e00527d4298f763eb2318a3ec4" },
     { name = "nomad-lab", extras = ["parsing", "infrastructure"], specifier = ">=1.3.4" },
     { name = "nomad-lab", extras = ["parsing", "infrastructure", "dev"], marker = "extra == 'dev'", specifier = ">=1.3.4" },
     { name = "nomad-material-processing", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/nomad-material-processing.git?rev=8545ef374ac53169fe1e40be927a212a364ebda1" },
-    { name = "nomad-measurements", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/nomad-measurements.git?rev=237dd2b6fc6152dbb8370a24dce26e483fb8ba78" },
+    { name = "nomad-measurements", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/nomad-measurements.git?rev=v1.1.1" },
+    { name = "plotly", marker = "extra == 'plugins'", specifier = "<6.0.0" },
     { name = "pyopenssl", marker = "extra == 'jupyter'" },
     { name = "rtg-sims", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/AreaA-data_modeling_and_schemas.git?subdirectory=rtg-sims&rev=c286f23d14dcb2e4dc32454f9ee1a2c467428c77" },
     { name = "statsmodels", marker = "extra == 'plugins'" },
@@ -3049,7 +3073,7 @@ provides-extras = ["plugins", "jupyter", "dev"]
 [[package]]
 name = "nomad-ikz-fz"
 version = "0.1.0"
-source = { git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=9faf82053a432a935193e61c84cb289cd32ebc05#9faf82053a432a935193e61c84cb289cd32ebc05" }
+source = { git = "https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git?rev=3a8dbfb8b5bc2c6ef53d997cc2097cf70f17c27b#3a8dbfb8b5bc2c6ef53d997cc2097cf70f17c27b" }
 dependencies = [
     { name = "nomad-lab", version = "1.3.13", source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }, marker = "python_full_version < '3.10'" },
     { name = "nomad-lab", version = "1.3.15", source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }, marker = "python_full_version >= '3.10'" },
@@ -3059,7 +3083,7 @@ dependencies = [
 [[package]]
 name = "nomad-ikz-omega-theta-xrd"
 version = "0.1.0"
-source = { git = "https://github.com/IKZ-Berlin/ikz-omega-theta-xrd.git?rev=c8d6c0858b6dee06858a93114cba7558da6c57ab#c8d6c0858b6dee06858a93114cba7558da6c57ab" }
+source = { git = "https://github.com/IKZ-Berlin/ikz-omega-theta-xrd.git?rev=e7049b305f6f5387008f8350f4a9f01bd942c386#e7049b305f6f5387008f8350f4a9f01bd942c386" }
 dependencies = [
     { name = "nomad-lab", version = "1.3.13", source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }, marker = "python_full_version < '3.10'" },
     { name = "nomad-lab", version = "1.3.15", source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }, marker = "python_full_version >= '3.10'" },
@@ -3067,8 +3091,8 @@ dependencies = [
 
 [[package]]
 name = "nomad-ikz-plugin"
-version = "0.1.5"
-source = { git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git?rev=v0.1.5#9a0d8b32e1e3e9f99a09857191e237616f1b9361" }
+version = "0.1.9"
+source = { git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git?rev=v0.1.9#0b70261dc668c9b4b7aa435f8cd40dacbf0c183f" }
 dependencies = [
     { name = "lakeshore-nomad-plugin" },
     { name = "laytec-epitt-plugin" },
@@ -3356,12 +3380,14 @@ dependencies = [
 
 [[package]]
 name = "nomad-measurements"
-version = "1.0.1"
-source = { git = "https://github.com/FAIRmat-NFDI/nomad-measurements.git?rev=237dd2b6fc6152dbb8370a24dce26e483fb8ba78#237dd2b6fc6152dbb8370a24dce26e483fb8ba78" }
+version = "1.1.1"
+source = { git = "https://github.com/FAIRmat-NFDI/nomad-measurements.git?rev=v1.1.1#443662cdd7dcfe5c825a379b2d4d00097043b130" }
 dependencies = [
+    { name = "fairmat-readers-transmission" },
     { name = "fairmat-readers-xrd" },
     { name = "nomad-lab", version = "1.3.13", source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }, marker = "python_full_version < '3.10'" },
     { name = "nomad-lab", version = "1.3.15", source = { registry = "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple" }, marker = "python_full_version >= '3.10'" },
+    { name = "nomad-material-processing" },
     { name = "xmltodict" },
 ]
 
