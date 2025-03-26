@@ -21,39 +21,17 @@ dependencies = ["nomad-lab[parsing, infrastructure]>=1.3.4"]
 
 [project.optional-dependencies]
 plugins = [
-#  "perovskite-solar-cell-database @ git+https://github.com/FAIRmat-NFDI/nomad-perovskite-solar-cells-database.git@f394d21abafeb659729af0c94e5f90949fce01c1",
-#  "nomad-porous-materials @ git+https://github.com/FAIRmat-NFDI/nomad-porous-materials.git@522f4a3208077f534f1c5e886527ee2104283d0b",
-#  "nomad-aitoolkit @ git+https://github.com/FAIRmat-NFDI/nomad-aitoolkit.git@b203f8eb28dc4b6771a39d5c5b7ad3d9d8583ac8",
-#  "nomad-simulations==0.0.1",
-#  "pynxtools[convert]==0.5.0",
-#  "nomad-schema-plugin-run>=1.0.1",
-#  "nomad-schema-plugin-simulation-workflow>=1.0.1",
-#  "nomad-normalizer-plugin-bandstructure>=1.0",
-#  "nomad-normalizer-plugin-dos>=1.0",
-#  "nomad-normalizer-plugin-soap>=1.0",
-#  "nomad-normalizer-plugin-spectra>=1.0",
-#  "nomad-normalizer-plugin-system>=1.0",
-#  "nomad-normalizer-plugin-simulation-workflow>=1.0",
-#  "eelsdbconverter @ git+https://github.com/nomad-coe/nomad-parser-eelsdb.git@entry-point",
-#  "nomad-parser-plugins-electronic>=1.0",
-#  "nomad-parser-plugins-atomistic>=1.0",
-#  "nomad-parser-plugins-workflow>=1.0",
-#  "nomad-parser-plugins-database>=1.0",
-
  "nomad-material-processing @ git+https://github.com/FAIRmat-NFDI/nomad-material-processing.git@8545ef374ac53169fe1e40be927a212a364ebda1",
- "nomad-measurements @	git+https://github.com/FAIRmat-NFDI/nomad-measurements.git@237dd2b6fc6152dbb8370a24dce26e483fb8ba78",
- "nomad-analysis @ git+https://github.com/FAIRmat-NFDI/nomad-analysis.git@5ef68517897d13e82862a84674572335793b44ec",
- # "ikz_plugin @ git+https://github.com/FAIRmat-NFDI/AreaA-data_modeling_and_schemas.git@3bd921f2e3a7dd9805b67c30654f6d6797832539#subdirectory=IKZ_plugin",
- #"nomad-ikz-plugin @git+https://github.com/IKZ-Berlin/nomad-ikz-plugin.git@1632a37e9c21e35a444939d12b48821eb847eb3e",
+ "nomad-measurements",
+ "nomad-analysis",
  "nomad-ikz-plugin",
- # "uv_vis_nir_transmission @ git+https://github.com/FAIRmat-NFDI/AreaA-data_modeling_and_schemas.git@245a82ddc24da5f8aaa79164e6669c18c2bc1572#subdirectory=transmission/transmission_plugin/uv_vis_nir_transmission_plugin",
- "lakeshore-nomad-plugin @ git+https://github.com/IKZ-Berlin/lakeshore-nomad-plugin.git@69a6deb3f0e99d7b0dc66714105dd62a56f157e9",
- "laytec_epitt_plugin @ git+https://github.com/IKZ-Berlin/laytec_epitt_nomad_plugin.git@f4953ac4ecb55b7003dee323d7d7f473e49ab4e3",
- "nomad-ikz-fz @ git+https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git@9faf82053a432a935193e61c84cb289cd32ebc05",
+ "nomad-ikz-fz @ git+https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git@3a8dbfb8b5bc2c6ef53d997cc2097cf70f17c27b",
  "nomad_ikz_raman @ git+https://github.com/IKZ-Berlin/IKZ_raman.git@797a36fa985412e00527d4298f763eb2318a3ec4",
- "nomad_ikz_omega_theta_xrd @ git+https://github.com/IKZ-Berlin/ikz-omega-theta-xrd.git@c8d6c0858b6dee06858a93114cba7558da6c57ab", 
+ "nomad_ikz_omega_theta_xrd @ git+https://github.com/IKZ-Berlin/ikz-omega-theta-xrd.git@e7049b305f6f5387008f8350f4a9f01bd942c386", 
  "rtg-sims @ git+https://github.com/FAIRmat-NFDI/AreaA-data_modeling_and_schemas.git@c286f23d14dcb2e4dc32454f9ee1a2c467428c77#subdirectory=rtg-sims", 
- "statsmodels" 
+ "ikz-trpl @ git+https://github.com/IKZ-Berlin/ikz-trpl.git@eff798a402344d65384c1b5666bf187747be01a6",
+ "statsmodels",
+ "plotly<6.0.0",
 ]
 jupyter = [
   "voila",
@@ -73,7 +51,9 @@ constraint-dependencies = ["hyperspy>=1.7.6"]
 prerelease = "disallow"
 
 [tool.uv.sources]
-nomad-ikz-plugin = { git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git", rev = "v0.1.5" }
+nomad-ikz-plugin = { git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git", rev = "v0.1.9" }
+nomad-measurements = { git = "https://github.com/FAIRmat-NFDI/nomad-measurements.git", rev = "v1.1.1" }
+nomad-analysis = { git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git", rev = "v0.0.7" }
 
 [tool.setuptools.packages.find]
 exclude = ["gui*", "docs*", "config*"]
