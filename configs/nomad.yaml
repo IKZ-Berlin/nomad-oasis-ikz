@@ -88,7 +88,7 @@ plugins:
     - "nomad_analysis.jupyter:schema"
     - "nomad_ikz_plugin.general:schema"
     - "nomad_ikz_plugin.characterization:schema"
-    # - "nomad_ikz_plugin.characterization:transmission_parser"
+    - "nomad_ikz_plugin.characterization:transmission_parser"
     - "nomad_ikz_plugin.deprecated.characterization:schema"
     - "nomad_ikz_plugin.pld:schema"
     - "nomad_ikz_plugin.movpe:schema"
@@ -117,9 +117,9 @@ plugins:
     - 'nomad_ikz_fz.apps:myapp'
     - 'nomad_ikz_fz.apps:fzcrysapp'
     - 'nomad_ikz_fz.apps:fzinstrumentapp'
-    - "nomad_ikz_plugin.movpe:movpesubstrateapp"
-    - "nomad_ikz_plugin.movpe:movpegrowthrunapp"
-    - "nomad_ikz_plugin.movpe:movpelayersapp"
+    - "nomad_ikz_plugin.movpe.movpe_app:movpesubstrateapp"
+    - "nomad_ikz_plugin.movpe.movpe_app:movpegrowthrunapp"
+    - "nomad_ikz_plugin.movpe.movpe_app:movpelayersapp"
     #- 'parsers/uv_vis_nir_transmission'
     - 'nomad_ikz_plugin.deprecated.characterization:schema'
   exclude:
