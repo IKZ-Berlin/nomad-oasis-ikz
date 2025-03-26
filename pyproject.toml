@@ -71,7 +71,7 @@ constraint-dependencies = ["hyperspy>=1.7.6"]
 prerelease = "disallow"
 
 [tool.uv.sources]
-nomad-ikz-plugin = { git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git", rev = "v0.1.8" }
+nomad-ikz-plugin = { git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git", rev = "v0.1.9" }
 nomad-measurements = { git = "https://github.com/FAIRmat-NFDI/nomad-measurements.git", rev = "v1.1.1" }
 nomad-analysis = { git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git", rev = "v0.0.7" }
 
