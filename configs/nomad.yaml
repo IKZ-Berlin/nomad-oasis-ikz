@@ -71,7 +71,7 @@ plugins:
   entry_points:
     exclude:
       - apps/3_experiment/2_eels
-      - nomad_measurements.transmission:parser
+      - nomad_measurements.transmission:parser_entry_point
 ui:
   apps:
     # Configures which apps to show. Note that the app for 'entries' (which
