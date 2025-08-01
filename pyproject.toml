@@ -52,7 +52,7 @@ prerelease = "disallow"
 
 [tool.uv.sources]
 nomad-ikz-plugin = { git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git", rev = "v0.1.9" }
-nomad-measurements = { git = "https://github.com/FAIRmat-NFDI/nomad-measurements.git", rev = "v1.1.1" }
+nomad-measurements = { git = "https://github.com/FAIRmat-NFDI/nomad-measurements.git", rev = "v1.2.3" }
 nomad-analysis = { git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git", rev = "v0.0.7" }
 
 [tool.setuptools.packages.find]
