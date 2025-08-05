@@ -2687,7 +2687,7 @@ infrastructure = [
 
 [[package]]
 name = "nomad-material-processing"
-version = "1.0.5.dev6+g8545ef3"
+version = "1.0.5.dev6+g8545ef374"
 source = { git = "https://github.com/FAIRmat-NFDI/nomad-material-processing.git?rev=8545ef374ac53169fe1e40be927a212a364ebda1#8545ef374ac53169fe1e40be927a212a364ebda1" }
 dependencies = [
     { name = "nomad-lab" },
