@@ -2550,7 +2550,7 @@ requires-dist = [
     { name = "nomad-measurements", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/nomad-measurements.git?rev=v1.2.3" },
     { name = "plotly", marker = "extra == 'plugins'", specifier = "<6.0.0" },
     { name = "pyopenssl", marker = "extra == 'jupyter'" },
-    { name = "rtg-sims", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/AreaA-data_modeling_and_schemas.git?subdirectory=rtg-sims&rev=c286f23d14dcb2e4dc32454f9ee1a2c467428c77" },
+    { name = "rtg-sims", marker = "extra == 'plugins'", git = "https://github.com/FAIRmat-NFDI/AreaA-data_modeling_and_schemas.git?subdirectory=rtg-sims&rev=d7db1bc694342aaf8d628da2febca237d91e23ed" },
     { name = "statsmodels", marker = "extra == 'plugins'" },
     { name = "voila", marker = "extra == 'jupyter'" },
 ]
@@ -2687,7 +2687,7 @@ infrastructure = [
 
 [[package]]
 name = "nomad-material-processing"
-version = "1.0.5.dev6+g8545ef374"
+version = "1.0.5.dev6+g8545ef3"
 source = { git = "https://github.com/FAIRmat-NFDI/nomad-material-processing.git?rev=8545ef374ac53169fe1e40be927a212a364ebda1#8545ef374ac53169fe1e40be927a212a364ebda1" }
 dependencies = [
     { name = "nomad-lab" },
@@ -4007,7 +4007,7 @@ wheels = [
 [[package]]
 name = "rtg-sims"
 version = "0.1.0"
-source = { git = "https://github.com/FAIRmat-NFDI/AreaA-data_modeling_and_schemas.git?subdirectory=rtg-sims&rev=c286f23d14dcb2e4dc32454f9ee1a2c467428c77#c286f23d14dcb2e4dc32454f9ee1a2c467428c77" }
+source = { git = "https://github.com/FAIRmat-NFDI/AreaA-data_modeling_and_schemas.git?subdirectory=rtg-sims&rev=d7db1bc694342aaf8d628da2febca237d91e23ed#d7db1bc694342aaf8d628da2febca237d91e23ed" }
 dependencies = [
     { name = "nomad-lab" },
     { name = "nomad-material-processing" },
