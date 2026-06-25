@@ -20,7 +20,7 @@ plugins:
 
 meta:
   deployment: 'oasis'
-  deployment_url: 'nomad-test.support.ikz-berlin.de/nomad-oasis/api'
+  deployment_url: 'nomad-test.support.ikz-berlin.de/nomad-oasis/api'  # why test?
   maintainer_email: 'edv@ikz-berlin.de'
 
 north:
@@ -44,4 +44,4 @@ elastic:
 #     enabled: true
 #     transfer_interval: 10
 
-# recover the customized ui from, that ui should rather go to the nomad-ikz-plugin instead of hardcoding it in the config file https://github.com/IKZ-Berlin/nomad-oasis-ikz/blob/a7d3ea86f916a1a13e9847a7ed26140595f95693/configs/nomad.yaml
+# recover the customized ui from, that ui should rather go to the nomad-ikz-plugin instead of hardcoding it here in the config file https://github.com/IKZ-Berlin/nomad-oasis-ikz/blob/a7d3ea86f916a1a13e9847a7ed26140595f95693/configs/nomad.yaml
