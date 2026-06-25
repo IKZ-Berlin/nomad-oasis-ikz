@@ -21,8 +21,11 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
 dependencies = ["nomad-lab[infrastructure]==1.4.2"]  # what's about nomad-lab parsing?
+[project.urls]
+repository = "https://github.com/IKZ-Berlin/nomad-oasis-ikz"
 
 [project.optional-dependencies]
+# Add your plugins to the list below.
 plugins = [
   "nomad-north-jupyter>=0.2.5",
   # "nomad-material-processing @ git+https://github.com/FAIRmat-NFDI/nomad-material-processing.git@8545ef374ac53169fe1e40be927a212a364ebda1",
@@ -39,11 +42,11 @@ plugins = [
 ]
 jupyter = [
   "jupyter-events",   # what for, used by which tool ?
-  "voila",  # migrate to use the nomad-north-voila container instead ?
-  "ipyaggrid",
-  "ipysheet",
-  "ipydatagrid",
-  "jupyter-flex",
+  # "voila",  # migrate to use the nomad-north-voila container instead ?
+  # "ipyaggrid",
+  # "ipysheet",
+  # "ipydatagrid",
+  # "jupyter-flex",
   "pyOpenSSL",  # what for, used by which tool?
 ]
 gpu-action = []
@@ -58,7 +61,7 @@ extra-index-url = [
 # constraint-dependencies = ["hyperspy>=1.7.6"]  # no longer exists in `nomad-distro-template` v1.4.2
 prerelease = "disallow"
 
-[tool.uv.sources]
+# [tool.uv.sources]
 # nomad-ikz-plugin = { git = "https://github.com/IKZ-Berlin/nomad-ikz-plugin.git", rev = "v0.1.9" }
 # nomad-measurements = { git = "https://github.com/FAIRmat-NFDI/nomad-measurements.git", rev = "v1.2.3" }
 # nomad-analysis = { git = "https://github.com/FAIRmat-NFDI/nomad-analysis.git", rev = "v0.0.7" }
