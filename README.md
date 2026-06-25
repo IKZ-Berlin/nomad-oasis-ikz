@@ -1,5 +1,7 @@
 ![docker image](https://github.com/IKZ-Berlin/nomad-oasis-ikz/actions/workflows/docker-publish.yml/badge.svg)
 
+Based on the [`nomad-distro-template`](https://github.com/FAIRmat-NFDI/nomad-distro-template).
+<!--note of caution-->
 
 # IKZ-Berlin's NOMAD Oasis Distribution
 
@@ -10,23 +12,28 @@ and how to customize it through [adding plugins](#adding-a-plugin).
 > [!IMPORTANT]
 > Depending on the settings of the owner of this repository, the distributed image might
 > be private and require authentication to pull.
-> If you want to keep the image private you need to configure and use a personal access
+> If you want to keep the image private, you need to configure and use a personal access
 > token (PAT) according to the instructions in the GitHub docs [here](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-with-a-personal-access-token-classic).
 > If you want to make the image public (recommended), you should make sure that your
 > organization settings allow public packages and make this package public after building it.
-> You can read more about this in the GitHub docs [here](https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility).
+> Check if the package access control and visibility is configured as desired by following the GitHub docs [here](https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility).
 
-> [!TIP]
-> In order for others to find and learn from your distribution we in FAIRmat would
-> greatly appreciate it if you would add the topic `nomad-distribution` by clicking the
-> ⚙️ next to "About" on the main GitHub page for this repository.
+<!--no TIP-->
 
 In this README you will find instructions for:
 1. [Deploying the distribution](#deploying-the-distribution)
+<!--no kubernetes involved, should the section on worker replicas and resource limits thus be removed?-->																																								
 2. [Adding a plugin](#adding-a-plugin)
-3. [Using the jupyter image](#the-jupyter-image)
+3. [The jupyter image](#the-jupyter-image)
+<!--no docker image-->
+<!--no automated unit and example upload test in CI-->
+<!--no regular package updates configured with dependabot,  so should the dependabot file be removed?-->
+<!--custom docs-->
+<!--backup-->
+<!--enabling actions-->
 4. [Updating the distribution from the template](#updating-the-distribution-from-the-template)
-5. [Solving common issues](#faqtrouble-shooting)
+5. [NOMAD Remote Tools Hub (NORTH)](#nomad-remote-tools-hub)
+6. [Solving common issues](#faqtrouble-shooting)
 
 ## Deploying the distribution
 
@@ -60,27 +67,92 @@ Below are instructions for how to deploy this NOMAD Oasis distribution
     sudo chown -R 1000 .volumes
     ```
 
-4. Pull the images specified in the `docker-compose.yaml`
+4. Create a file for environment variables
 
-    Note that the image needs to be public or you need to provide a PAT (see "Important" note above).
+    Before running the containers, you should create a `.env` file in the root of the repository.
+    This file is used to store sensitive information and is ignored by git.
+
+    At a minimum, you should add a secure secret for the API:
+
+    ```
+    NOMAD_SERVICES_API_SECRET='***'
+    ```
+
+    Make sure the `NOMAD_SERVICES_API_SECRET` is at least 32 characters long.
+
+    If you have bash available, you can run this script:
+
+    ```sh
+    bash scripts/generate-env.sh
+    ```
+
+    This will create a `.env` file with a randomly generated 64-character API secret.
+    If the file already exists, you will be prompted before overwriting it.
+
+5. Pull the images specified in the `docker-compose.yaml`
+
+    Note that the image(s) needs to be public or you need to provide a PAT (see "Important" note above).
 
     ```sh
     docker compose pull
     ```
 
-5. And run it with docker compose in detached (--detach or -d) mode
+5. Configuring Secure HTTP and HTTPS Connections
+
+   By default `docker-compose.yaml` uses the HTTP protocol for communication. This works for testing, but before entering production you must secure your setup with HTTPS; otherwise, any communication with the server, including credentials and sensitive data, can be compromised.
+
+   HTTPS requires a TLS certificate, which must be renewed periodically. Depending on your setup, you have several options:
+
+   1. You already have a certificate.
+
+      In this case, you just need the certificate and key files.
+
+   2. Free certificate from Let's Encrypt
+
+      [Let's Encrypt](https://letsencrypt.org/) provides free TLS certificates for those with a domain name.
+      Follow their tutorials for instructions on generating a certificate.
+
+   3. Self-signed certificate
+
+      For testing, you can create a [self-signed certificate](https://en.wikipedia.org/wiki/Self-signed_certificate). Note that self-signed certificates are not recommended for production since they are not trusted by browsers. You can generate one with:
+
+      ```sh
+      mkdir tls
+      openssl req -x509 -nodes -days 365 \
+        -newkey rsa:2048 \
+        -keyout ./tls/selfsigned.key \
+        -out ./tls/selfsigned.crt \
+        -subj "/CN=localhost"
+      ```
+
+   To start using a TLS certificate, update the `proxy` configuration in `docker-compose.yml`:
+   ```diff
+   - # HTTP
+   - - ./configs/nginx_http.conf:/etc/nginx/conf.d/default.conf:ro
+
+   + # HTTPS
+   + - ./configs/nginx_https.conf:/etc/nginx/conf.d/default.conf:ro
+   + - ./tls/selfsigned.crt:/etc/nginx/tls/mounted-nomad-oasis.crt:ro  # Path to your TLS certificate
+   + - ./tls/selfsigned.key:/etc/nginx/tls/mounted-nomad-oasis.key:ro  # Path to your TLS private key
+   ```
+
+6. And run it with docker compose in detached (--detach or -d) mode
 
     ```sh
     docker compose up -d
     ```
 
-6. Optionally you can now test that NOMAD is running with
+7. (Optional) You can now test that NOMAD is running with
 
-    ```
+    ```sh
+    # HTTP
     curl localhost/nomad-oasis/alive
+
+    # HTTPS (--insecure flag is only needed for a self-signed certificate)
+    curl --insecure https://localhost/nomad-oasis/alive
     ```
 
-7. Finally, open [http://localhost/nomad-oasis](http://localhost/nomad-oasis) in your browser to start using your new NOMAD Oasis.
+8. Finally, open [http://localhost/nomad-oasis](http://localhost/nomad-oasis) in your browser to start using your new NOMAD Oasis.
 
     Whenever you update your image you need to shut down NOMAD using
 
@@ -88,7 +160,7 @@ Below are instructions for how to deploy this NOMAD Oasis distribution
     docker compose down
     ```
 
-    and then repeat steps 4. and 5. above.
+    and then repeat steps 5. and 6. above.
 
 #### NOMAD Remote Tools Hub (NORTH)
 
@@ -101,7 +173,7 @@ systems docker gid. The user id 1000 is used as the nomad user inside all contai
 Please see the [Jupyter image](#the-jupyter-image) section below for more information on the jupyter NORTH image being generated in this repository.
 
 You can find more details on setting up and maintaining an Oasis in the NOMAD docs here:
-[nomad-lab.eu/prod/v1/docs/oasis/install.html](https://nomad-lab.eu/prod/v1/docs/oasis/install.html)
+[https://nomad-lab.eu/prod/v1/staging/docs/howto/oasis/configure.html](https://nomad-lab.eu/prod/v1/staging/docs/howto/oasis/configure.html)
 
 ### For an existing Oasis
 
@@ -109,7 +181,7 @@ If you already have an Oasis running you only need to change the image being pul
 your `docker-compose.yaml` with `ghcr.io/ikz-berlin/nomad-oasis-ikz:main` for the services
 `worker`, `app`, `north`, and `logtransfer`.
 
-If you want to use the `nomad.yaml` from this repository you also need to comment out
+If you want to use the `nomad.yaml` from this repository, you also need to comment out
 the inclusion of the `nomad.yaml` under the volumes key of those services in the
 `docker-compose.yaml`.
 
@@ -121,6 +193,8 @@ volumes:
 To run the new image you can follow steps 5. and 6. [above](#for-a-new-oasis).
 
 ## Adding a plugin
+
+You can find a list of available NOMAD plugins [here](https://nomad-lab.eu/prod/v1/oasis/gui/search/plugins). For a list of official plugins provided by FAIRmat, please see [here](https://github.com/FAIRmat-NFDI/.github/blob/main/profile/README.md). For inspiration, you can also check the list of [plugins that are installed on the production NOMAD deployment hosted by FAIRmat](https://gitlab.mpcdf.mpg.de/nomad-lab/nomad-distro/-/raw/main/pyproject.toml?ref_type=heads).
 
 To add a new plugin to the docker image you should add it to the plugins table in the [`pyproject.toml`](pyproject.toml) file.
 
@@ -168,10 +242,16 @@ be generated.
 In addition to the Docker image for running the oasis, this repository also builds a custom NORTH image for running a jupyter hub with the installed plugins.
 This image has been added to the [`configs/nomad.yaml`](configs/nomad.yaml) during the initialization of this repository and should therefore already be available in your Oasis under "Analyze / NOMAD Remote Tools Hub / jupyter"
 
+We currently use `quay.io/jupyter/base-notebook:2025-04-14` as our base image for Jupyter (see Dockerfile). While it includes the necessary Python packages, it does not come with `R` or `Julia` pre-installed.
+If you need support for those languages, you can switch to `quay.io/jupyter/datascience-notebook:2025-04-04`, which includes both `R` and `Julia`.
+The Jupyter image does not include `gcc` or `build-essential` by default. If you want to allow users to install Python packages that require compilation while running a notebook, you'll need to install these tools in the [Dockerfile](./Dockerfile#L172) or switch the base image to `quay.io/jupyter/datascience-notebook:2025-04-04`.
+However, including these packages can increase the image size and may introduce security risks if arbitrary code is compiled at runtime.
+
+Note that the `base-notebook` image is more lightweight and uses less disk space compared to the `datascience-notebook` image.
 The image is quite large and might cause a timeout the first time it is run. In order to avoid this you can pre pull the image with:
 
-```
-docker pull ghcr.io/ikz-berlin/nomad-oasis-ikz/jupyter:main
+```sh
+docker pull ghcr.io/fairmat-nfdi/nomad-distro-template/jupyter:main
 ```
 
 If you want additional python packages to be available to all users in the jupyter hub you can add those to the jupyter table in the [`pyproject.toml`](pyproject.toml):
@@ -187,13 +267,19 @@ jupyter = [
 ]
 ```
 
+## Using Docker image via plugin
+
+The recommended way to integrate the Docker image e.g., Jupyter into your NOMAD Oasis is through the plugin entry point system. This approach is cleaner, more maintainable, and automatically handles all necessary configurations.
+
+[`nomad-north-jupyter`](https://github.com/FAIRmat-NFDI/nomad-north-jupyter) is a NOMAD plugin that provides a containerized JupyterLab environment for interactive analysis within NORTH (NOMAD Remote Tools Hub). This plugin has been added to this distribution by default via `pyproject.toml`. In `nomad.yaml`, the `NORTHTool` entry point is configured to use the [custom Jupyter image](#the-jupyter-image) built in this repository.
+
 
 ## Updating the distribution from the template
 
 In order to update an existing distribution with any potential changes in the template you can add a new `git remote` for the template and merge with that one while allowing for unrelated histories:
 
 ```
-git remote add template https://github.com/FAIRmat-NFDI/nomad-distribution-template
+git remote add template https://github.com/FAIRmat-NFDI/nomad-distro-template
 git fetch template
 git merge template/main --allow-unrelated-histories
 ```
@@ -205,16 +291,21 @@ git checkout --theirs Dockerfile
 git checkout --theirs .github/workflows/docker-publish.yml
 ```
 
-For detailed instructions on how to resolve the merge conflicts between different version we refer you to the latest template release [notes](https://github.com/FAIRmat-NFDI/nomad-distribution-template/releases/latest)
+The lock file merge conflicts can be resolved to use your versions instead of the template repository resolution.
+```sh
+git checkout --ours uv.lock
+```
 
-Once the merge conflicts are resolved you should add the changes and commit them
+For detailed instructions on how to resolve the merge conflicts between different version we refer you to the latest template release [notes](https://github.com/FAIRmat-NFDI/nomad-distro-template/releases/latest)
+
+Once the merge conflicts are resolved, you should add the changes and commit them
 
 ```
 git add -A
 git commit -m "Updated to new distribution version"
 ```
 
-Ideally all workflows should be triggered automatically but you might need to run the initialization one manually by navigating to the "Actions" tab at the top, clicking "Template Repository Initialization" on the left side, and triggering it by clicking "Run workflow" under the "Run workflow" button on the right.
+Ideally, all workflows should be triggered automatically but you might need to run the initialization once manually by navigating to the "Actions" tab at the top, clicking "Template Repository Initialization" on the left side, and triggering it by clicking "Run workflow" under the "Run workflow" button on the right.
 
 ## FAQ/Trouble shooting
 
