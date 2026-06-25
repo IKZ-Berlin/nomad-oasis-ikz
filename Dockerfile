@@ -5,6 +5,10 @@
 # https://docs.docker.com/engine/reference/builder/
 
 ARG PYTHON_VERSION=3.12
+ARG UV_VERSION=0.7
+ARG JUPYTER_VERSION=2025-04-14
+
+FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv_image
 
 FROM python:${PYTHON_VERSION}-slim AS base
 
@@ -14,7 +18,21 @@ ENV PYTHONUNBUFFERED=1
 ENV VIRTUAL_ENV=/opt/venv \
     PATH="/opt/venv/bin:$PATH" \
     UV_LINK_MODE=copy \
+    UV_FROZEN=1 \
     UV_PROJECT_ENVIRONMENT=/opt/venv
+
+# Create a non-privileged user.
+# See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
+ARG UID=1000
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    nomad
+
 
 # Final stage to create the runnable image with minimal size
 FROM base AS base_final
@@ -39,17 +57,6 @@ RUN apt-get update \
 # https://pythonspeed.com/articles/multi-stage-docker-python/
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Create a non-privileged user that the frenrug will run under.
-# See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
-ARG UID=1000
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    nomad
 
 FROM base AS builder
 
@@ -73,42 +80,96 @@ RUN apt-get update \
       git \
  && rm -rf /var/lib/apt/lists/*
 
-# Create a non-privileged user that the frenrug will run under.
-# See https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#user
-ARG UID=1000
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --home "/nonexistent" \
-    --shell "/sbin/nologin" \
-    --no-create-home \
-    --uid "${UID}" \
-    nomad
-
-
 # Install UV
-COPY --from=ghcr.io/astral-sh/uv:0.4 /uv /bin/uv
+COPY --from=uv_image /uv /bin/uv
 
 RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=source=.git,target=.git,type=bind \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --extra plugins --frozen --no-install-project
+    uv sync --extra plugins
+# removed parameters --frozen --no-install-project
 
 
 COPY scripts ./scripts
 
+FROM builder AS docs
+
+WORKDIR /app
+
+ARG NOMAD_DOCS_REPO="https://github.com/FAIRmat-NFDI/nomad-docs.git"
+ARG NOMAD_DOCS_REPO_REF=""
+
+# Clones the documentation repository, checks out the version matching nomad-lab
+# (unless a specific NOMAD_DOCS_REPO_REF is provided), installs it, and builds the documentation.
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    set -ex && \
+    # Clone the documentation repository \
+    echo "Cloning from: ${NOMAD_DOCS_REPO}" && \
+    git clone "${NOMAD_DOCS_REPO}" docs_repo && cd docs_repo && \
+    # Determine which version to build \
+    if [ -n "${NOMAD_DOCS_REPO_REF}" ]; then \
+        # Use explicitly provided ref \
+        echo "Checking out provided ref: ${NOMAD_DOCS_REPO_REF}"; \
+        git checkout "${NOMAD_DOCS_REPO_REF}"; \
+    else \
+        # Match documentation version to nomad-lab version \
+        NOMAD_VERSION=$(uv tree --package nomad-lab | grep "^nomad-lab v" | sed 's/^nomad-lab //'); \
+        echo "Detected nomad-lab version: ${NOMAD_VERSION}"; \
+        if git rev-parse --verify "refs/tags/${NOMAD_VERSION}" >/dev/null 2>&1; then \
+            echo "Tag ${NOMAD_VERSION} found. Checking out."; \
+            git checkout "${NOMAD_VERSION}"; \
+        else \
+            echo "Tag ${NOMAD_VERSION} not found. Checking out main branch."; \
+            git checkout main; \
+        fi; \
+    fi && \
+    # Install and build documentation \
+    uv pip install . && \
+    PYTHONPATH=src uv run --no-sync mkdocs build && \
+    # Move built site to final destination \
+    mkdir -p /app/built_docs && \
+    cp -r site/* /app/built_docs
+
+FROM builder AS gpu_action_builder
+
+WORKDIR /app
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --extra plugins --extra gpu-action
+
+FROM builder AS cpu_action_builder
+
+WORKDIR /app
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --extra plugins --extra cpu-action
+
 FROM base_final AS final
 
-COPY --chown=nomad:1000 --from=builder /opt/venv /opt/venv
-COPY --chown=nomad:1000 scripts/run.sh .
-COPY --chown=nomad:1000 scripts/run-worker.sh .
+ARG PYTHON_VERSION=3.12
+
+COPY --chown=nomad:${UID} --from=builder /opt/venv /opt/venv
+# will the next two lines and their run scripts be required?
+# these are absent in newer installation, removing them here
+# COPY --chown=nomad:${UID} scripts/run.sh .
+# COPY --chown=nomad:${UID} scripts/run-worker.sh .
 COPY configs/nomad.yaml nomad.yaml
+COPY pyproject.toml uv.lock /opt/
+COPY --chown=nomad:${UID} --from=docs /app/built_docs /opt/venv/lib/python${PYTHON_VERSION}/site-packages/nomad/app/static/docs
 
 RUN mkdir -p /app/.volumes/fs \
- && chown -R nomad:1000 /app \
- && chown -R nomad:1000 /opt/venv \
+ && chown -R nomad:${UID} /app \
+ && chown -R nomad:${UID} /opt/venv \
  && mkdir nomad \
- && cp /opt/venv/lib/python3.12/site-packages/nomad/jupyterhub_config.py nomad/
+ && cp /opt/venv/lib/python${PYTHON_VERSION}/site-packages/nomad/jupyterhub_config.py nomad/
+
 
 USER nomad
 
@@ -118,8 +179,19 @@ EXPOSE 9000
 
 VOLUME /app/.volumes/fs
 
+FROM final AS cpu_action_final
 
-FROM jupyter/datascience-notebook:lab-3.6.2 AS jupyter
+COPY --chown=nomad:${UID} --from=cpu_action_builder /opt/venv /opt/venv
+
+FROM final AS gpu_action_final
+
+COPY --chown=nomad:${UID} --from=gpu_action_builder /opt/venv /opt/venv
+
+
+FROM quay.io/jupyter/base-notebook:${JUPYTER_VERSION} AS jupyter_builder
+
+ENV UV_PROJECT_ENVIRONMENT=/opt/conda \
+    UV_FROZEN=1
 
 # Fix: https://github.com/hadolint/hadolint/wiki/DL4006
 # Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
@@ -129,20 +201,61 @@ USER root
 
 RUN apt-get update \
  && apt-get install --yes --quiet --no-install-recommends \
-       libmagic1 \
-       # clean cache and logs
-       && rm -rf /var/lib/apt/lists/* /var/log/* /var/tmp/* ~/.npm
+      libgomp1 \
+      libmagic1 \
+      file \
+      gcc \
+      build-essential \
+      curl \
+      zip \
+      unzip \
+      git \
+      # clean cache and logs
+      && rm -rf /var/lib/apt/lists/* /var/log/* /var/tmp/* ~/.npm
 
 # Switch back to jovyan to avoid accidental container runs as root
 USER ${NB_UID}
 WORKDIR "${HOME}"
 
-COPY --from=ghcr.io/astral-sh/uv:0.5 /uv /bin/uv
-
+COPY --from=uv_image /uv /bin/uv
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv export --extra plugins --extra jupyter | uv pip install -r /dev/stdin --system
+    # Use inexact to avoid removing pre-installed packages in the environment
+    # Use no-install-project to skip installing the current project (`nomad-distribution`)
+    uv sync --extra plugins --extra jupyter --no-install-project --inexact
+
+
+FROM quay.io/jupyter/base-notebook:${JUPYTER_VERSION} AS jupyter
+# Fix: https://github.com/hadolint/hadolint/wiki/DL4006
+# Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+USER root
+
+RUN apt-get update \
+ && apt-get install --yes --quiet --no-install-recommends \
+      libgomp1 \
+      libmagic1 \
+      file \
+      curl \
+      zip \
+      unzip \
+      git \
+      # `nbconvert` dependencies
+      # https://nbconvert.readthedocs.io/en/latest/install.html#installing-tex
+      texlive-xetex \
+      texlive-fonts-recommended \
+      texlive-plain-generic \
+      # clean cache and logs
+      && rm -rf /var/lib/apt/lists/* /var/log/* /var/tmp/* ~/.npm
+
+# Switch back to jovyan to avoid accidental container runs as root
+USER ${NB_UID}
+WORKDIR "${HOME}"
+
+COPY --from=uv_image /uv /bin/uv
+COPY --from=jupyter_builder /opt/conda /opt/conda
 
 
 # Get rid ot the following message when you open a terminal in jupyterlab:
