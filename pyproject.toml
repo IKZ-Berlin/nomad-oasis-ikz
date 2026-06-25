@@ -20,7 +20,7 @@ dynamic = ["version"]
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
-dependencies = ["nomad-lab[infrastructure]==1.4.2"]
+dependencies = ["nomad-lab[infrastructure]==1.4.2"]  # what's about nomad-lab parsing?
 
 [project.optional-dependencies]
 plugins = [
@@ -32,7 +32,8 @@ plugins = [
   # "nomad-ikz-fz @ git+https://github.com/IKZ-Berlin/ikz-fz-nomad-plugin.git@3a8dbfb8b5bc2c6ef53d997cc2097cf70f17c27b"
   # "nomad_ikz_raman @ git+https://github.com/IKZ-Berlin/IKZ_raman.git@797a36fa985412e00527d4298f763eb2318a3ec4",
   # "nomad_ikz_omega_theta_xrd @ git+https://github.com/IKZ-Berlin/ikz-omega-theta-xrd.git@e7049b305f6f5387008f8350f4a9f01bd942c386",
-  # "rtg-sims @ git+https://github.com/FAIRmat-NFDI/AreaA-data_modeling_and_schemas.git@c286f23d14dcb2e4dc32454f9ee1a2c467428c77#subdirectory=rtg-sims" "ikz-trpl @ git+https://github.com/IKZ-Berlin/ikz-trpl.git@eff798a402344d65384c1b5666bf187747be01a6",
+  # "rtg-sims @ git+https://github.com/FAIRmat-NFDI/AreaA-data_modeling_and_schemas.git@c286f23d14dcb2e4dc32454f9ee1a2c467428c77#subdirectory=rtg-sims"
+  # "ikz-trpl @ git+https://github.com/IKZ-Berlin/ikz-trpl.git@eff798a402344d65384c1b5666bf187747be01a6",
   "statsmodels",  # should be moved to the plugin where it is required
   "plotly<6.0.0",  # why this constraint ?
 ]
@@ -54,7 +55,7 @@ dev = ["nomad-lab[infrastructure, dev]==1.4.2"]  # is nomad-lab[parsing] no long
 extra-index-url = [
   "https://gitlab.mpcdf.mpg.de/api/v4/projects/2187/packages/pypi/simple",
 ]
-# constraint-dependencies = ["hyperspy>=1.7.6"]
+# constraint-dependencies = ["hyperspy>=1.7.6"]  # no longer exists in `nomad-distro-template` v1.4.2
 prerelease = "disallow"
 
 [tool.uv.sources]
