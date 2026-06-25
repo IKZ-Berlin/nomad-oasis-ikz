@@ -341,6 +341,16 @@ services:
     container_name: nomad_oasis_proxy
     command: nginx -g 'daemon off;'
     volumes:
+      # TODO nomad-distro-template has
+      # # Shared config
+      # - ./configs/nginx_base_conf:/etc/nginx/conf.d/nginx_base_conf:ro
+      # # HTTP
+      # - ./configs/nginx_http.conf:/etc/nginx/conf.d/default.conf:ro
+      # # HTTPS (you need to have a TLS certificate)
+      # # - ./configs/nginx_https.conf:/etc/nginx/conf.d/default.conf:ro
+      # # - ./tls/selfsigned.crt:/etc/nginx/tls/mounted-nomad-oasis.crt:ro  # Path to your TLS certificate
+      # # - ./tls/selfsigned.key:/etc/nginx/tls/mounted-nomad-oasis.key:ro  # Path to your TLS private key
+      # TODO nomad-oasis-ikz had
       - ./configs/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       app:
