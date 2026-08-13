@@ -46,9 +46,6 @@ RUN apt-get update \
        curl \
        zip \
        unzip \
-       nodejs \
-       npm \
-       && npm install -g configurable-http-proxy@^4.2.0 \
        # clean cache and logs
        && rm -rf /var/lib/apt/lists/* /var/log/* /var/tmp/* ~/.npm
 
@@ -88,7 +85,6 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --extra plugins
-# removed parameters --frozen --no-install-project
 
 
 COPY scripts ./scripts
@@ -156,10 +152,6 @@ FROM base_final AS final
 ARG PYTHON_VERSION=3.12
 
 COPY --chown=nomad:${UID} --from=builder /opt/venv /opt/venv
-# will the next two lines and their run scripts be required?
-# these are absent in newer installation, removing them here
-# COPY --chown=nomad:${UID} scripts/run.sh .
-# COPY --chown=nomad:${UID} scripts/run-worker.sh .
 COPY configs/nomad.yaml nomad.yaml
 COPY pyproject.toml uv.lock /opt/
 COPY --chown=nomad:${UID} --from=docs /app/built_docs /opt/venv/lib/python${PYTHON_VERSION}/site-packages/nomad/app/static/docs
@@ -218,6 +210,7 @@ USER ${NB_UID}
 WORKDIR "${HOME}"
 
 COPY --from=uv_image /uv /bin/uv
+
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
