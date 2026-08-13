@@ -304,17 +304,13 @@ services:
       NOMAD_API_URL: "http://app:8000/nomad-oasis/api/v1"
       DOCKER_PREFIX: "nomad-oasis-north"
       DOCKER_NETWORK: "nomad_oasis_network"
-                                   
-                                 
-                                  
-                                                 
-                                 
-                             
     env_file:
       - ./.env.north
     volumes:
       # - ./configs/nomad.yaml:/app/nomad.yaml
       # - "./.volumes/fs:/app/.volumes/fs"
+      # Bind Docker socket on the host so we can connect to the daemon from
+      # within the container
       - "/var/run/docker.sock:/var/run/docker.sock:rw"
       # Bind Docker volume on host for JupyterHub database and cookie secrets
       - "nomad_north:/data"
