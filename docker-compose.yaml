@@ -169,7 +169,7 @@ services:
   # nomad gpu worker (actions)
   # gpu_worker:
   #   restart: unless-stopped
-  #   image: ghcr.io/fairmat-nfdi/nomad-distro-template/gpu-action:main
+  #   image: ghcr.io/ikz-berlin/nomad-oasis-ikz/gpu-action:main
   #   platform: linux/amd64
   #   container_name: nomad_oasis_gpu_worker
   #   env_file:
@@ -214,7 +214,7 @@ services:
   # # nomad cpu worker (actions)
   # cpu_worker:
   #   restart: unless-stopped
-  #   image: ghcr.io/fairmat-nfdi/nomad-distro-template/cpu-action:main
+  #   image: ghcr.io/ikz-berlin/nomad-oasis-ikz/cpu-action:main
   #   platform: linux/amd64
   #   container_name: nomad_oasis_cpu_worker
   #   env_file:
@@ -387,7 +387,7 @@ services:
 
   # jupyterlab image: (this is only used to pull the image, no service is run for this)
   jupyterlab_image:
-    image: ghcr.io/fairmat-nfdi/nomad-distro-template/jupyter:main
+    image: ghcr.io/ikz-berlin/nomad-oasis-ikz/jupyter:main
     platform: linux/amd64
     container_name: nomad_jupyter_image
     pull_policy: always
