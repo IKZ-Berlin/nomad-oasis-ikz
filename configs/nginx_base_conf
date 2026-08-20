@@ -86,3 +86,13 @@ location /nomad-oasis/north/ {
 
     proxy_buffering off;
 }
+
+location /keycloak/ {
+        proxy_pass          http://keycloak:8080;
+}
+
+location /keycloak/admin/ {
+    allow 172.20.22.0/24;
+    deny all;
+    proxy_pass http://keycloak:8080;
+}
