@@ -1,6 +1,6 @@
 services:
-  api_host: 'nomad-test.support.ikz-berlin.de'
-  api_base_path: '/nomad-oasis'
+  api_host: 'nomad.support.ikz-berlin.de'
+  api_base_path: "/nomad-oasis"
   upload_limit: 1000  # enough descriptors available ?
   # upload_members_group_search_enabled: true  # true is now the default
 
@@ -8,24 +8,25 @@ oasis:
   is_oasis: true
   uses_central_user_management: false
 
+keycloak:
+  public_server_url: 'https://nomad.support.ikz-berlin.de/keycloak/'
+  server_url: 'http://keycloak:8080/keycloak/'
+  realm_name: ikz
+  username: <admin-username>
+  password: <password>
+
+
 plugins:
   entry_points:
     options:
       nomad_north_jupyter.north_tools:jupyter:
         north_tool:
-          image: ghcr.io/fairmat-nfdi/nomad-north-jupyter:latest
-    # exclude:
-    #   - apps/3_experiment/2_eels  # eels db has been removed from NOMAD for license reasons
-    #   - nomad_measurements.transmission:parser_entry_point  # temporarily deactivated anyway
+          image: ghcr.io/ikz-berlin/nomad-oasis-ikz/jupyter:main
 
 meta:
   deployment: 'oasis'
-  deployment_url: 'nomad-test.support.ikz-berlin.de/nomad-oasis/api'  # why test?
-  maintainer_email: 'edv@ikz-berlin.de'
-
-north:
-  enabled: false
-# north: temporarily deactivated north, after the committing of https://github.com/IKZ-Berlin/nomad-oasis-ikz/blob/a7d3ea86f916a1a13e9847a7ed26140595f95693/configs/nomad.yamlin all north containers and its underlying infrastructure have been refactored, we should rather build on the new containers rather than sticking to old copies of containers with almost the same functionality
+  deployment_url: 'https://nomad.support.ikz-berlin.de/nomad-oasis/api'
+  maintainer_email: 'it-team@ikz-berlin.de'
 
 logstash:
   enabled: false
@@ -40,8 +41,18 @@ elastic:
   entries_index: nomad_oasis_entries_v1
   materials_index: nomad_oasis_materials_v1
 
-# logtransfer:
-#     enabled: true
-#     transfer_interval: 10
+north:
+  enabled: false
+  enable_new_hub_api: true
 
-# recover the customized ui from, that ui should rather go to the nomad-ikz-plugin instead of hardcoding it here in the config file https://github.com/IKZ-Berlin/nomad-oasis-ikz/blob/a7d3ea86f916a1a13e9847a7ed26140595f95693/configs/nomad.yaml
+# these keys are available in the current deployment of nomad at ikz 
+fs:
+  north_home_external: /apps/data/volumes/apps_nomad_oasis_files/_data/north/users
+
+  public_external: /apps/data/volumes/apps_nomad_oasis_files/_data/public
+  staging_external: /apps/data/volumes/apps_nomad_oasis_files/_data/staging
+
+# notes relevant only for IKZ migration
+# north: temporarily deactivated north, after the committing of https://github.com/IKZ-Berlin/nomad-oasis-ikz/blob/a7d3ea86f916a1a13e9847a7ed26140595f95693/configs/nomad.yaml in all north containers and its underlying infrastructure have been refactored, build on the new containers rather than sticking to old copies of containers with almost the same functionality but no maintenance anymore from anybody
+
+# the old IKZ Oasis had a customized UI from, that UI should rather go to the nomad-ikz-plugin instead of hardcoding it here in the config file https://github.com/IKZ-Berlin/nomad-oasis-ikz/blob/a7d3ea86f916a1a13e9847a7ed26140595f95693/configs/nomad.yaml
